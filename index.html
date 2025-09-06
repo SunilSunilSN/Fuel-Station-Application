@@ -78,6 +78,41 @@
           </table>
         </div>
       </section>
+
+      <!-- Daily Log Two-->
+<section class="card" style="margin-top: 16px">
+  <div class="card-head">
+    <h2>Daily Summary</h2>
+    <span class="tag" id="dayTitle">—</span>
+  </div>
+  <div class="card-body">
+    <div class="row" style="gap: 12px; align-items: flex-end">
+      <div class="field" style="max-width: 220px">
+        <label for="dayPicker">Pick Date</label>
+        <input type="date" id="dayPicker" />
+      </div>
+    </div>
+    <div style="overflow: auto; margin-top: 12px">
+      <table id="dailyTable">
+        <thead>
+          <tr>
+            <th>Fuel</th>
+            <th class="right">Liters</th>
+            <th class="right">Amount (₹)</th>
+          </tr>
+        </thead>
+        <tbody id="DailyBody"></tbody>
+        <tfoot>
+          <tr>
+            <td>Total</td>
+            <td class="right" id="dTL">0.00</td>
+            <td class="right" id="dTA">0.00</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</section>
       <!-- Monthly Summary Card -->
       <section class="card" style="margin-top: 16px">
         <div class="card-head">

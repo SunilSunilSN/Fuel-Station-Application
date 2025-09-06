@@ -247,6 +247,42 @@ function updateMonth() {
   document.getElementById("mTA").textContent = "₹" + tA.toLocaleString("en-IN");
   document.getElementById("monthTitle").textContent = month;
 }
+function updateDateSummary() {
+  const day = document.getElementById("dayPicker").value;
+  const body = document.getElementById("DailyBody");
+  body.innerHTML = "";
+  if (!day) {
+    document.getElementById("dayTitle").textContent = "—";
+    return;
+  }
+
+  const rows = {};
+  let tL = 0,
+    tA = 0;
+  getDailyLog()
+    .filter((d) => d.date.startsWith(day))
+    .forEach((d) => {
+      getConfig().forEach((p) => {
+        const v = d[p.id] || { sold: 0, amount: 0 };
+        if (!rows[p.fuel]) rows[p.fuel] = { liters: 0, amount: 0 };
+        rows[p.fuel].liters += v.sold;
+        rows[p.fuel].amount += v.amount;
+        tL += v.sold;
+        tA += v.amount;
+      });
+    });
+
+  Object.entries(rows).forEach(([fuel, v]) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${fuel}</td><td class="right">${v.liters.toFixed(
+      2
+    )}</td><td class="right">₹${v.amount.toLocaleString("en-IN")}</td>`;
+    body.appendChild(tr);
+  });
+  document.getElementById("dTL").textContent = tL.toFixed(2);
+  document.getElementById("dTA").textContent = "₹" + tA.toLocaleString("en-IN");
+  document.getElementById("dayTitle").textContent = day;
+}
 
 // ===== Init =====
 document.addEventListener("DOMContentLoaded", () => {
@@ -257,4 +293,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("monthPicker")
     .addEventListener("change", updateMonth);
+      document
+    .getElementById("dayPicker")
+    .addEventListener("change", updateDateSummary);
 });
