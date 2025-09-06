@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Petrol Pump Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header
+        class="row"
+        style="
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 14px;
+          display: flex;
+        "
+      >
+        <div>
+          <h1 style="margin: 0 0 6px; font-size: 28px">
+            ⛽ Devaramani Petrol Station Dashboard
+          </h1>
+          <div class="muted">Daily meter readings & monthly summary</div>
+        </div>
+        <div style="display: flex; gap: 20px">
+          <div>
+            <a class="nav-card" href="config.html" class="fuel-name">
+              ⚙️ Pump Config
+            </a>
+          </div>
+          <div>
+            <a class="nav-card" href="shift.html" class="fuel-name">
+              📔 Shift Settlement
+            </a>
+          </div>
+          <div>
+            <a class="nav-card" href="product.html" class="fuel-name">
+              📦 Products Config
+            </a>
+          </div>
+          <div>
+            <a class="nav-card" href="customer.html" class="fuel-name">
+              👨🏻‍💼 Customer Config
+            </a>
+          </div>
+        </div>
+        <!-- <a href="config.html" class="pill">⚙️ Pump Config</a>
+        <a href="shift.html" class="pill">Shift Settlement</a>
+        <a href="product.html" class="pill">Products Config</a> -->
+      </header>
+
+      <!-- Fuel Prices on Top -->
+      <div id="fuelPrices" class="fuel-prices"></div>
+
+      <!-- Daily Entry Card -->
+      <section
+        class="card"
+        id="dailyCard"
+        style="margin-bottom: 16px; margin-top: 16px"
+      >
+        <div class="card-head">
+          <h2>Daily Meter Reading</h2>
+          <span class="tag">Add/Update by Date</span>
+        </div>
+        <div class="card-body" id="dailyFormContainer"></div>
+      </section>
+
+      <!-- Daily Log -->
+      <section class="card" style="margin-top: 16px">
+        <div class="card-head">
+          <h2>Daily Log</h2>
+          <span class="muted" id="logCount">0 days</span>
+        </div>
+        <div class="card-body" style="overflow: auto">
+          <table id="logTable">
+            <thead id="logHeader"></thead>
+            <tbody id="logBody"></tbody>
+          </table>
+        </div>
+      </section>
+      <!-- Monthly Summary Card -->
+      <section class="card" style="margin-top: 16px">
+        <div class="card-head">
+          <h2>Monthly Summary</h2>
+          <span class="tag" id="monthTitle">—</span>
+        </div>
+        <div class="card-body">
+          <div class="row" style="gap: 12px; align-items: flex-end">
+            <div class="field" style="max-width: 220px">
+              <label for="monthPicker">Pick Month</label>
+              <input type="month" id="monthPicker" />
+            </div>
+          </div>
+          <div style="overflow: auto; margin-top: 12px">
+            <table id="monthlyTable">
+              <thead>
+                <tr>
+                  <th>Fuel</th>
+                  <th class="right">Liters</th>
+                  <th class="right">Amount (₹)</th>
+                </tr>
+              </thead>
+              <tbody id="monthlyBody"></tbody>
+              <tfoot>
+                <tr>
+                  <td>Total</td>
+                  <td class="right" id="mTL">0.00</td>
+                  <td class="right" id="mTA">0.00</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+    <script src="common.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

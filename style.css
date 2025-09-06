@@ -1,0 +1,431 @@
+:root {
+  --bg: #0b1220;
+  --card: #111a2b;
+  --muted: #8fa3bf;
+  --text: #e6eefc;
+  --primary: #4f8cff;
+  --accent: #22c55e;
+  --danger: #ef4444;
+  --shadow: 0 10px 25px rgba(0,0,0,.35);
+  --radius: 16px;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: linear-gradient(180deg, #0b1220, #0b1220 40%, #0e1628);
+  color: var(--text);
+}
+/* max-width: 1150px; */
+.container { margin: 28px auto; padding: 0 16px; }
+.grid { display: grid; gap: 16px; }
+.grid-2 { grid-template-columns: repeat(2, minmax(0,1fr)); }
+@media (max-width: 980px){ .grid-2 { grid-template-columns: 1fr; } }
+
+.card { background: linear-gradient(180deg, #111a2b, #0f192b);
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.card h2 { margin: 0; font-weight: 700; font-size: 20px; }
+.card-head { display:flex; align-items:center; justify-content:space-between; padding:18px 20px; border-bottom:1px solid rgba(255,255,255,.06); }
+.card-body { padding: 18px 20px 20px; }
+.muted { color: var(--muted); font-size: 13px; }
+
+.row { display:flex; gap:12px; flex-wrap: wrap; }
+.field { flex: 1 1 180px; }
+label { display:block; font-size:12px; color: var(--muted); margin-bottom:6px; }
+input, select, button {
+  width:94%; padding:11px 12px; border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: #0b1324; color: var(--text);
+}
+button { cursor:pointer; transition: 0.2s; }
+.btn-primary { background: linear-gradient(180deg, #3a7bfd, #2a6af0);     width: 100%;}
+.btn-accent { background: linear-gradient(180deg, #16a34a, #15803d);     width: 100%;}
+.btn-danger { background: linear-gradient(180deg, #ef4444, #b91c1c);     width: 100%;}
+.btn-outline { background: transparent; border:1px solid rgba(255,255,255,.3); }
+
+.pill { display:inline-flex; align-items:center; gap:8px; padding:8px 10px; border-radius:999px; font-size:12px; border:1px solid rgba(255,255,255,.14); background:#0c1527; }
+.tag { font-size: 11px; color:#9cc1ff; background:#0e1f3e; border:1px solid rgba(76,136,255,.35); padding:3px 8px; border-radius:999px; }
+
+table { width:100%; border-collapse: collapse; }
+th, td { text-align:left; padding:10px 12px; border-bottom:1px dashed rgba(255,255,255,.08); font-size: 14px; }
+th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; }
+tfoot td { font-weight: 700; }
+.right { text-align: right; }
+.center { text-align: center; }
+
+/* Fuel Prices */
+.fuel-prices { display:flex; flex-wrap:wrap; gap:16px; }
+.fuel-card {
+  flex:1 1 200px;
+  background: linear-gradient(180deg, #16253f, #0f1d33);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius: var(--radius);
+  padding:20px;
+  text-align:center;
+  box-shadow: var(--shadow);
+}
+.fuel-card .fuel-name { font-size:20px; font-weight:600; margin-bottom:8px; }
+.fuel-card .fuel-rate { font-size:24px; font-weight:700; color: var(--accent); }
+.pump-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* was 280px */
+  gap: 20px; /* was 16px */
+  margin-top: 16px;
+}
+.pump-card {
+  background: linear-gradient(180deg, #16253f, #0f1d33);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,.3);
+}
+.pump-card h3 {
+  margin: 0 0 12px;
+  font-size: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.fuel-label {
+  font-size: 13px;
+  padding: 3px 8px;
+  border-radius: 8px;
+  background: #0c1527;
+  border: 1px solid rgba(255,255,255,.2);
+  color: #9cc1ff;
+}
+.totals-grid {
+  display: flex;
+  gap: 16px;
+  margin: 18px 0;
+}
+.total-card {
+  flex: 1;
+  background: #0e1f3e;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 12px;
+  padding: 14px;
+  text-align: center;
+  font-size: 15px;
+}
+.total-card strong {
+  font-size: 20px;
+  display: block;
+  margin-top: 4px;
+  color: #4f8cff;
+}
+.inner-credit {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.8rem;
+  margin-top: 4px;
+}
+.inner-credit th,
+.inner-credit td {
+  border: 1px solid #ddd;
+  padding: 2px 4px;
+}
+#shiftLogTable td {
+  position: relative;
+  overflow: visible;
+}
+
+.credit-popover {
+  position: relative;
+  cursor: pointer;
+  color: var(--primary);
+  font-weight: 600;
+  display: inline-block;
+}
+
+.credit-popover-content {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,.15);
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  min-width: 280px;
+  z-index: 9999;
+}
+
+.credit-popover-content table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.credit-popover-content th,
+.credit-popover-content td {
+  border: 1px solid rgba(255,255,255,.1);
+  padding: 2px 4px;
+  text-align: left;
+}
+
+.credit-popover-content th {
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.credit-popover:hover .credit-popover-content,
+.credit-popover-content:hover {
+  visibility: visible;
+  opacity: 1;
+}
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1000; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+  background: var(--card);
+  margin: 5% auto;
+  padding: 0;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;   /* limit height */
+}
+.modal-header {
+  padding: 10px 15px;
+  font-weight: bold;
+  flex-shrink: 0;
+  text-align: center;
+}
+.modal-body {
+  padding: 15px;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+/* Modal footer */
+.modal-footer {
+  padding: 10px 15px;
+  border-top: 1px solid #0c0c0c;
+  text-align: right;
+  background: var(--card);
+  flex-shrink: 0;
+}
+.modal-close {
+  float: right;
+  font-size: 35px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  color: var(--danger);
+}
+
+#creditModalBody table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+}
+
+#creditModalBody th,
+#creditModalBody td {
+  border: 1px solid rgba(255,255,255,.15);
+  padding: 6px 8px;
+  text-align: left;
+  font-size: 13px;
+}
+
+select {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,.2);
+  background: #0b1324;
+  color: #e6eefc;
+  font-size: 14px;
+}
+.nav-card {
+  flex:1 1 200px;
+  background: linear-gradient(180deg, #16253f, #0f1d33);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius: var(--radius);
+  padding:20px;
+  text-align:center;
+  box-shadow: var(--shadow);
+  color: white;
+  text-decoration: none;
+}
+.nav-card:hover {
+  color: var(--accent);
+}
+.pump-card-container {
+  display: flex;
+  gap: 10px;
+}
+.pump-card-selection {
+  border-radius: 8px;
+  padding: 12px;
+  min-width: 160px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s ease;
+  background: #0b1324
+}
+.pump-card-selection input {
+  display: none; /* hide checkbox */
+}
+.pump-card-selection:hover {
+  border-color: #05f511;
+  background: rgb(116, 116, 116)
+}
+.pump-card-selection.active {
+  background: #2f922f;
+  border-color: green;
+  color: green;
+  font-weight: bold;
+}
+
+/* -------------------- */
+/* Mobile Adjustments   */
+/* -------------------- */
+@media (max-width: 768px) {
+  body {
+    font-size: 15px;
+  }
+
+  .container {
+    margin: 16px auto;
+    padding: 0 10px;
+  }
+
+  .grid,
+  .grid-2 {
+    grid-template-columns: 1fr; /* stack everything */
+    gap: 12px;
+  }
+
+  .card,
+  .fuel-card,
+  .pump-card,
+  .nav-card {
+    padding: 14px;
+  }
+
+  .card-head,
+  .card-body {
+    padding: 14px;
+  }
+
+  .row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  input, select, button {
+    width: 100%;
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .pump-grid {
+    grid-template-columns: 1fr; /* stack pumps */
+    gap: 14px;
+  }
+
+  .totals-grid {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .total-card {
+    font-size: 14px;
+    padding: 12px;
+  }
+  .total-card strong {
+    font-size: 18px;
+  }
+
+  .pump-card-container {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .pump-card-selection {
+    min-width: unset;
+    width: 100%;
+  }
+
+  table th,
+  table td {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  .modal-content {
+    width: 95%;
+    margin: 10% auto;
+    max-height: 80vh;
+  }
+}
+@media (max-width: 420px) {
+  body {
+    font-size: 14px; /* slightly smaller */
+  }
+
+  .container {
+    margin: 10px auto;
+    padding: 0 8px;
+  }
+
+  .card,
+  .fuel-card,
+  .pump-card,
+  .nav-card {
+    padding: 12px;
+  }
+
+  .card-head,
+  .card-body {
+    padding: 12px;
+  }
+
+  input,
+  select,
+  button {
+    font-size: 13px;
+    padding: 9px;
+  }
+
+  table th,
+  table td {
+    font-size: 11px;
+    padding: 6px;
+  }
+
+  .modal-content {
+    width: 100%;         /* full width */
+    margin: 0;           /* no large margin */
+    border-radius: 0;    /* edge-to-edge */
+    max-height: 100vh;   /* fit full height */
+  }
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    padding: 10px;
+  }
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pump Config</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header
+        class="row"
+        style="
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 14px;
+        "
+      >
+        <div>
+          <h1 style="margin: 0 0 6px; font-size: 28px">⚙️ Pump Config</h1>
+          <div class="muted">Add or edit pumps (fuel & name)</div>
+        </div>
+        <div style="display: flex; gap: 20px">
+          <div>
+            <a class="nav-card" href="index.html" class="fuel-name">
+              📈 Dashboard
+            </a>
+          </div>
+          <div>
+            <a class="nav-card" href="shift.html" class="fuel-name">
+              📔 Shift Settlement
+            </a>
+          </div>
+          <div>
+            <a class="nav-card" href="product.html" class="fuel-name">
+              📦 Products Config
+            </a>
+          </div>
+          <div>
+            <a class="nav-card" href="customer.html" class="fuel-name">
+              👨🏻‍💼 Customer Config
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <section class="card">
+        <div class="card-head">
+          <h2>Pumps</h2>
+          <button id="addPump" class="btn-accent" style="width: auto">
+            ➕ Add Pump
+          </button>
+        </div>
+        <div class="card-body">
+          <table id="pumpConfigTable">
+            <thead>
+              <tr>
+                <th>Pump Name</th>
+                <th>Fuel Type</th>
+                <th class="center">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="pumpConfigBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <script src="config.js"></script>
+  </body>
+</html>

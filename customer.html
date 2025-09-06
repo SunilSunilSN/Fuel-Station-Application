@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Credit Customers</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header
+        class="row"
+        style="
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 14px;
+        "
+      >
+        <div>
+          <h1 style="margin: 0 0 6px; font-size: 28px">👥 Credit Customers</h1>
+          <div class="muted">Add customer Data</div>
+        </div>
+        <div style="display: flex; gap: 20px">
+          <div>
+            <a class="nav-card" href="index.html" class="fuel-name">
+              📈 Dashboard
+            </a>
+          </div>
+          <div>
+            <a class="nav-card" href="config.html" class="fuel-name">
+              ⚙️ Pump Config
+            </a>
+          </div>
+          <div>
+            <a class="nav-card" href="product.html" class="fuel-name">
+              📦 Products Config
+            </a>
+          </div>
+          <div>
+            <a class="nav-card" href="shift.html" class="fuel-name">
+              📔 Shift Settlement
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <!-- Customer List -->
+      <section class="card">
+        <div class="card-head">
+          <h2>Credit Customers</h2>
+          <button id="addCustomer" class="btn-accent" style="width: auto">
+            ➕ Add Customer
+          </button>
+        </div>
+        <div class="card-body">
+          <table id="customerTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Vehicles</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- Modal for Add/Edit -->
+    <div id="customerModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="modal-close">&times;</span>
+
+          <h3 id="customerModalTitle">Add Customer</h3>
+        </div>
+        <div class="modal-content">
+          <form id="customerForm">
+            <input type="hidden" id="custId" />
+            <div class="field">
+              <label>Name</label>
+              <input type="text" id="custName" required />
+            </div>
+            <div class="field">
+              <label>Email</label>
+              <input type="email" id="custEmail" />
+            </div>
+            <div class="field">
+              <label>Phone</label>
+              <input type="text" id="custPhone" />
+            </div>
+            <div class="field">
+              <label>Vehicles (comma separated)</label>
+              <input
+                type="text"
+                id="custVehicles"
+                placeholder="KA01AB1234, KA02CD5678"
+              />
+            </div>
+            <button type="submit" class="btn-accent" style="margin-top: 20px">
+              💾 Save
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="common.js"></script>
+    <script src="customer.js"></script>
+  </body>
+</html>

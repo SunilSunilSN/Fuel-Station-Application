@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Shift Settlement</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header
+        class="row"
+        style="
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 14px;
+        "
+      >
+        <div>
+          <h1 style="margin: 0 0 6px; font-size: 28px">Shift Settlement</h1>
+          <div class="muted">Add Shifts Final Settlements</div>
+        </div>
+        <div style="display: flex; gap: 20px">
+          <div>
+            <a class="nav-card" href="index.html" class="fuel-name">
+              📈 Dashboard
+            </a>
+          </div>
+          <div>
+            <a class="nav-card" href="config.html" class="fuel-name">
+              ⚙️ Pump Config
+            </a>
+          </div>
+          <div>
+            <a class="nav-card" href="product.html" class="fuel-name">
+              📦 Products Config
+            </a>
+          </div>
+            <div>
+            <a class="nav-card" href="customer.html" class="fuel-name">
+              👨🏻‍💼 Customer Config
+            </a>
+          </div>
+        </div>
+      </header>
+
+      <!-- Shift Info -->
+      <section class="card" style="margin-bottom: 14px">
+        <div class="card-head"><h2>Shift Details</h2></div>
+        <div class="card-body row">
+          <div class="field">
+            <label>Date</label>
+            <input type="date" id="shiftDate" />
+          </div>
+          <div class="field">
+            <label>Shift / Person</label>
+            <input
+              type="text"
+              id="shiftPerson"
+              placeholder="e.g. Morning / John"
+            />
+          </div>
+<div id="pumpContainer">
+  <div class="field">
+    <label>Select Pumps:</label>
+    <div id="pumpsCheckboxes" class="pump-card-container"></div>
+  </div>
+</div>
+
+        </div>
+      </section>
+
+      <!-- Payments -->
+      <section class="card" style="margin-bottom: 14px">
+        <div class="card-head"><h2>Payments</h2></div>
+        <div class="card-body grid grid-2">
+          <div class="field">
+            <label>UPI (₹)</label><input type="number" id="upi" />
+          </div>
+          <div class="field">
+            <label>Card (₹)</label><input type="number" id="card" />
+          </div>
+          <div class="field">
+            <label>IOC Fleet Card (₹)</label><input type="number" id="fleet" />
+          </div>
+          <div class="field">
+            <label>Cash (₹)</label><input type="number" id="cash" />
+          </div>
+          <div class="field">
+            <label>Miscellaneous (₹)</label>
+            <input type="number" id="miscAmt" />
+          </div>
+          <div class="field">
+            <label>Remark</label>
+            <input
+              type="text"
+              id="miscRemark"
+              placeholder="e.g. Food for workers"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- Credit Sales -->
+      <section class="card" style="margin-bottom: 14px">
+        <div class="card-head">
+          <h2>Credit Sales</h2>
+          <button id="addCredit" class="btn-accent" style="width: auto">
+            ➕ Add Credit
+          </button>
+        </div>
+        <div class="card-body">
+          <table id="creditTable">
+            <thead>
+              <tr>
+                <th>Select Customer</th>
+                <th>Vehicle No</th>
+                <th>Bill No</th>
+                <th>Indent No</th>
+                <th>Liters</th>
+                <th>Fuel</th>
+                <th>Rate</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Product Sales -->
+      <section class="card" style="margin-bottom: 14px">
+        <div class="card-head">
+          <h2>Product Sales</h2>
+          <button id="addProduct" class="btn-accent" style="width: auto">
+            ➕ Add Product
+          </button>
+        </div>
+        <div class="card-body">
+          <table id="productTable">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Rate</th>
+                <th>Amount</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Totals -->
+      <section class="card" style="margin-bottom: 14px">
+        <div class="card-head"><h2>Settlement Totals</h2></div>
+        <div class="card-body totals-grid">
+          <div class="total-card">
+            Expected<br /><strong id="expectedAmt">₹0.00</strong>
+          </div>
+          <div class="total-card">
+            Reported<br /><strong id="reportedAmt">₹0.00</strong>
+          </div>
+          <div class="total-card">
+            Difference<br /><strong id="diffAmt">₹0.00</strong>
+          </div>
+        </div>
+        <div class="row" style="margin-top: 12px">
+          <button class="btn-primary" id="saveShift">💾 Save Shift</button>
+        </div>
+      </section>
+
+      <!-- Shift Log -->
+      <section class="card" style="margin-top: 16px">
+        <div class="card-head">
+          <h2>Shift Log</h2>
+          <span class="muted" id="shiftCount">0 Shifts</span>
+        </div>
+        <div class="card-body" style="overflow: auto">
+          <table id="shiftLogTable">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Person</th>
+                <th>Pump</th>
+                <th class="right">Expected (₹)</th>
+                <th class="right">Reported (₹)</th>
+                <th class="right">Difference (₹)</th>
+                <th>Credits</th>
+                <th>Products</th>
+              </tr>
+            </thead>
+            <tbody id="shiftLogBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <!-- Credit Modal -->
+    <div id="creditModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="modal-close" style="float: right; cursor: pointer"
+            >&times;</span
+          >
+          <h3>Credit Transactions</h3>
+        </div>
+        <div id="creditModalBody"></div>
+      </div>
+    </div>
+
+    <!-- Product Modal -->
+    <div id="productModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="modal-close" style="float: right; cursor: pointer"
+            >&times;</span
+          >
+          <h3>Product Transactions</h3>
+        </div>
+        <div id="productModalBody"></div>
+      </div>
+    </div>
+    <div id="shiftDetailModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="modal-close" style="float: right; cursor: pointer"
+            >&times;</span
+          >
+          <h3>Shift Details</h3>
+        </div>
+        <div class="modal-body" id="shiftDetailBody">
+          <!-- All dynamic content goes here -->
+        </div>
+      </div>
+    </div>
+    <script src="common.js"></script>
+    <script src="shift.js"></script>
+  </body>
+</html>
