@@ -305,8 +305,96 @@ select {
   color: green;
   font-weight: bold;
 }
-@media (max-width: 420px) {
-  body {
-    font-size: 14px; /* slightly smaller */
+
+/*-------------------------*/
+.nav-main {
+  display: flex; 
+  gap: 20px;
+}
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+  /*-------------------------*/
+    .nav-main {
+    flex-direction: column;  /* stack vertically */
+    gap: 12px;               /* tighter gap for mobile */
+    width: 100%;
+  }
+
+  .nav-main a {
+    display: block;          /* full-width touch targets */
+    text-align: center;
+    padding: 12px;
+  }
+  /*-------------------------*/
+  .container {
+    margin: 16px auto;
+    padding: 0 10px;
+  }
+
+  h1 {
+    font-size: 22px;
+    line-height: 1.3;
+  }
+
+  .card h2 {
+    font-size: 18px;
+  }
+
+  .nav-card {
+    flex: 1 1 100%;
+    padding: 14px;
+    font-size: 14px;
+  }
+
+  .fuel-prices {
+    flex-direction: column;
+  }
+
+  .fuel-card {
+    flex: 1 1 100%;
+    padding: 16px;
+  }
+
+  .pump-grid {
+    grid-template-columns: 1fr; /* Single column on small screens */
+    gap: 12px;
+  }
+
+  .totals-grid {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .field {
+    flex: 1 1 100%;
+  }
+
+  input,
+  select,
+  button {
+    width: 100%;
+    font-size: 15px;
+  }
+
+  table th,
+  table td {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  /* Modal adjustments */
+  .modal-content {
+    width: 95%;
+    margin: 10% auto;
+    max-height: 80vh;
+  }
+
+  .modal-body {
+    padding: 10px;
   }
 }
