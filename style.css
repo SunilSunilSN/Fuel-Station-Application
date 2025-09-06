@@ -193,6 +193,7 @@ tfoot td { font-weight: 700; }
   background-color: rgba(0,0,0,0.5);
 }
 
+
 .modal-content {
   background: var(--card);
   margin: 5% auto;
@@ -274,6 +275,7 @@ select {
 .pump-card-container {
   display: flex;
   gap: 10px;
+ 
 }
 .pump-card-selection {
   border-radius: 8px;
@@ -287,6 +289,7 @@ select {
 }
 .pump-card-selection input {
   display: none; /* hide checkbox */
+  
 }
 .pump-card-selection:hover {
   border-color: #05f511;
@@ -297,135 +300,4 @@ select {
   border-color: green;
   color: green;
   font-weight: bold;
-}
-
-/* -------------------- */
-/* Mobile Adjustments   */
-/* -------------------- */
-@media (max-width: 768px) {
-  body {
-    font-size: 15px;
-  }
-
-  .container {
-    margin: 16px auto;
-    padding: 0 10px;
-  }
-
-  .grid,
-  .grid-2 {
-    grid-template-columns: 1fr; /* stack everything */
-    gap: 12px;
-  }
-
-  .card,
-  .fuel-card,
-  .pump-card,
-  .nav-card {
-    padding: 14px;
-  }
-
-  .card-head,
-  .card-body {
-    padding: 14px;
-  }
-
-  .row {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  input, select, button {
-    width: 100%;
-    font-size: 14px;
-    padding: 10px;
-  }
-
-  .pump-grid {
-    grid-template-columns: 1fr; /* stack pumps */
-    gap: 14px;
-  }
-
-  .totals-grid {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .total-card {
-    font-size: 14px;
-    padding: 12px;
-  }
-  .total-card strong {
-    font-size: 18px;
-  }
-
-  .pump-card-container {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .pump-card-selection {
-    min-width: unset;
-    width: 100%;
-  }
-
-  table th,
-  table td {
-    font-size: 12px;
-    padding: 8px;
-  }
-
-  .modal-content {
-    width: 95%;
-    margin: 10% auto;
-    max-height: 80vh;
-  }
-}
-@media (max-width: 420px) {
-  body {
-    font-size: 14px; /* slightly smaller */
-  }
-
-  .container {
-    margin: 10px auto;
-    padding: 0 8px;
-  }
-
-  .card,
-  .fuel-card,
-  .pump-card,
-  .nav-card {
-    padding: 12px;
-  }
-
-  .card-head,
-  .card-body {
-    padding: 12px;
-  }
-
-  input,
-  select,
-  button {
-    font-size: 13px;
-    padding: 9px;
-  }
-
-  table th,
-  table td {
-    font-size: 11px;
-    padding: 6px;
-  }
-
-  .modal-content {
-    width: 100%;         /* full width */
-    margin: 0;           /* no large margin */
-    border-radius: 0;    /* edge-to-edge */
-    max-height: 100vh;   /* fit full height */
-  }
-
-  .modal-header,
-  .modal-body,
-  .modal-footer {
-    padding: 10px;
-  }
 }
