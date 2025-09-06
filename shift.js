@@ -83,12 +83,12 @@ function addCreditRow() {
 
   const tr = document.createElement("tr");
   tr.innerHTML = `
-    <td><select class="creditCustomer"></select></td>
-    <td><select class="creditVehicle"></select></select></td>
-    <td><input class="billNo" placeholder="Bill No"></td>
-    <td><input class="indentNo" placeholder="Indent No"></td>
-    <td><input type="number" step="0.01" class="liters"></td>
-    <td>
+    <td data-label="Customer"><select class="creditCustomer"></select></td>
+    <td data-label="Vehicle"><select class="creditVehicle"></select></select></td>
+    <td data-label="Bill No"><input class="billNo" placeholder="Bill No"></td>
+    <td data-label="Indent No"><input class="indentNo" placeholder="Indent No"></td>
+    <td data-label="Liters"><input type="number" step="0.01" class="liters"></td>
+    <td data-label="Pump">
       <select class="pumpSelect">
         ${selectedPumps
           .map(
@@ -100,10 +100,10 @@ function addCreditRow() {
           .join("")}
       </select>
     </td>
-    <td class="fuelCell"></td>
-    <td class="rateCell"></td>
-    <td><input type="number" class="amount" readonly></td>
-    <td><button class="btn-danger delRow">✖</button></td>
+    <td data-label="Fuel" class="fuelCell"></td>
+    <td data-label="Rate"class="rateCell"></td>
+    <td data-label="Amount"><input type="number" class="amount" readonly></td>
+    <td data-label="Action"><button class="btn-danger delRow">✖ Delete</button></td>
   `;
   creditBody.appendChild(tr);
 
@@ -167,7 +167,7 @@ function addProductRow() {
   const products = getProducts();
 
   tr.innerHTML = `
-    <td>
+    <td data-label="Product">
       <select class="product">
         ${products
           .map(
@@ -177,10 +177,10 @@ function addProductRow() {
           .join("")}
       </select>
     </td>
-    <td><input type="number" step="0.01" class="qty"></td>
-    <td><span class="rate">0</span></td>
-    <td><input type="number" class="amount" readonly></td>
-    <td><button class="btn-danger delRow">✖</button></td>
+    <td data-label="Number of Items"><input type="number" step="0.01" class="qty"></td>
+    <td data-label="Rate/Piece"><span class="rate">0</span></td>
+    <td data-label="Amount"><input type="number" class="amount" readonly></td>
+    <td data-label="Action"><button class="btn-danger delRow">✖ Delete </button></td>
   `;
 
   productBody.appendChild(tr);

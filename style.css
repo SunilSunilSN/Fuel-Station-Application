@@ -16,11 +16,15 @@ body {
   background: linear-gradient(180deg, #0b1220, #0b1220 40%, #0e1628);
   color: var(--text);
 }
-/* max-width: 1150px; */
+
+/* --------------------------
+   Layout
+   -------------------------- */
 .container {
   margin: 28px auto;
   padding: 0 16px;
 }
+
 .grid {
   display: grid;
   gap: 16px;
@@ -34,6 +38,9 @@ body {
   }
 }
 
+/* --------------------------
+   Card
+   -------------------------- */
 .card {
   background: linear-gradient(180deg, #111a2b, #0f192b);
   border: 1px solid rgba(255, 255, 255, 0.06);
@@ -64,6 +71,9 @@ h1 {
   font-size: 13px;
 }
 
+/* --------------------------
+   Forms
+   -------------------------- */
 .row {
   display: flex;
   gap: 12px;
@@ -109,6 +119,9 @@ button {
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+/* --------------------------
+   Badges & Tags
+   -------------------------- */
 .pill {
   display: inline-flex;
   align-items: center;
@@ -128,6 +141,9 @@ button {
   border-radius: 999px;
 }
 
+/* --------------------------
+   Tables
+   -------------------------- */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -155,7 +171,9 @@ tfoot td {
   text-align: center;
 }
 
-/* Fuel Prices */
+/* --------------------------
+   Fuel Prices
+   -------------------------- */
 .fuel-prices {
   display: flex;
   flex-wrap: wrap;
@@ -180,10 +198,14 @@ tfoot td {
   font-weight: 700;
   color: var(--accent);
 }
+
+/* --------------------------
+   Pumps
+   -------------------------- */
 .pump-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* was 280px */
-  gap: 20px; /* was 16px */
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
   margin-top: 16px;
 }
 .pump-card {
@@ -208,6 +230,10 @@ tfoot td {
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #9cc1ff;
 }
+
+/* --------------------------
+   Totals
+   -------------------------- */
 .totals-grid {
   display: flex;
   gap: 16px;
@@ -228,6 +254,10 @@ tfoot td {
   margin-top: 4px;
   color: #4f8cff;
 }
+
+/* --------------------------
+   Credit Popover
+   -------------------------- */
 .inner-credit {
   border-collapse: collapse;
   width: 100%;
@@ -243,7 +273,6 @@ tfoot td {
   position: relative;
   overflow: visible;
 }
-
 .credit-popover {
   position: relative;
   cursor: pointer;
@@ -251,7 +280,6 @@ tfoot td {
   font-weight: 600;
   display: inline-block;
 }
-
 .credit-popover-content {
   visibility: hidden;
   opacity: 0;
@@ -268,30 +296,30 @@ tfoot td {
   min-width: 280px;
   z-index: 9999;
 }
-
 .credit-popover-content table {
   width: 100%;
   border-collapse: collapse;
   font-size: 12px;
 }
-
 .credit-popover-content th,
 .credit-popover-content td {
   border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 2px 4px;
   text-align: left;
 }
-
 .credit-popover-content th {
   font-weight: 600;
   color: var(--muted);
 }
-
 .credit-popover:hover .credit-popover-content,
 .credit-popover-content:hover {
   visibility: visible;
   opacity: 1;
 }
+
+/* --------------------------
+   Modal
+   -------------------------- */
 .modal {
   display: none;
   position: fixed;
@@ -300,10 +328,11 @@ tfoot td {
   top: 0;
   width: 100%;
   height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.5);
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  box-sizing: border-box;
 }
-
 .modal-content {
   background: var(--card);
   margin: 5% auto;
@@ -313,7 +342,9 @@ tfoot td {
   max-width: 900px;
   display: flex;
   flex-direction: column;
-  max-height: 90vh; /* limit height */
+  max-height: 90vh;
+  box-shadow: var(--shadow);
+  animation: fadeIn 0.3s ease;
 }
 .modal-header {
   padding: 10px 15px;
@@ -326,8 +357,6 @@ tfoot td {
   overflow-y: auto;
   flex-grow: 1;
 }
-
-/* Modal footer */
 .modal-footer {
   padding: 10px 15px;
   border-top: 1px solid #0c0c0c;
@@ -341,17 +370,14 @@ tfoot td {
   font-weight: bold;
   cursor: pointer;
 }
-
 .modal-close:hover {
   color: var(--danger);
 }
-
 #creditModalBody table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 12px;
 }
-
 #creditModalBody th,
 #creditModalBody td {
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -360,14 +386,9 @@ tfoot td {
   font-size: 13px;
 }
 
-select {
-  padding: 10px;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: #0b1324;
-  color: #e6eefc;
-  font-size: 14px;
-}
+/* --------------------------
+   Navigation Cards
+   -------------------------- */
 .nav-card {
   flex: 1 1 200px;
   background: linear-gradient(180deg, #16253f, #0f1d33);
@@ -382,6 +403,10 @@ select {
 .nav-card:hover {
   color: var(--accent);
 }
+
+/* --------------------------
+   Pump Selection
+   -------------------------- */
 .pump-card-container {
   display: flex;
   gap: 10px;
@@ -397,7 +422,7 @@ select {
   background: #0b1324;
 }
 .pump-card-selection input {
-  display: none; /* hide checkbox */
+  display: none;
 }
 .pump-card-selection:hover {
   border-color: #05f511;
@@ -410,184 +435,215 @@ select {
   font-weight: bold;
 }
 
-/*-------------------------*/
+/* --------------------------
+   Navigation Main
+   -------------------------- */
 .nav-main {
   display: flex;
   gap: 20px;
 }
-/* Mobile Responsiveness */
+
+/* --------------------------
+   Mobile Responsiveness (merged)
+   -------------------------- */
 @media (max-width: 600px) {
-  /*-------------------------*/
+  /* Navigation */
   .nav-main {
-    flex-direction: column; /* stack vertically */
-    gap: 12px; /* tighter gap for mobile */
+    flex-direction: column;
+    gap: 12px;
     width: 100%;
   }
-
   .nav-main a {
-    display: block; /* full-width touch targets */
+    display: block;
     text-align: center;
     padding: 12px;
   }
-  /*-------------------------*/
+
+  /* Container & Headings */
   .container {
-    margin: 16px auto;
+    margin: 12px auto;
     padding: 0 10px;
   }
-
   h1 {
     font-size: 22px;
     line-height: 1.3;
   }
-
+  h2,
   .card h2 {
     font-size: 18px;
   }
 
+  /* Nav cards */
   .nav-card {
     flex: 1 1 100%;
     padding: 14px;
     font-size: 14px;
+    text-align: center;
   }
 
+  /* Fuel prices & totals */
   .fuel-prices {
     flex-direction: column;
   }
-
   .fuel-card {
     flex: 1 1 100%;
     padding: 16px;
   }
-
-  .pump-grid {
-    grid-template-columns: 1fr; /* Single column on small screens */
-    gap: 12px;
-  }
-
   .totals-grid {
     flex-direction: column;
     gap: 12px;
   }
 
+  /* Pump grid/cards */
+  .pump-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .pump-card-container {
+    flex-direction: column;
+  }
+
+  /* Forms */
   .row {
     flex-direction: column;
     gap: 10px;
   }
-
   .field {
     flex: 1 1 100%;
   }
-
   input,
   select,
   button {
-    width: 100%;
     font-size: 15px;
   }
 
+  /* Tables */
   table th,
   table td {
     font-size: 13px;
     padding: 8px;
   }
-
-  /* Modal adjustments */
-  .modal-content {
-    width: 95%;
-    margin: 10% auto;
-    max-height: 80vh;
-  }
-
-  .modal-body {
-    padding: 10px;
-  }
-}
-/* --------------------------
-   Mobile Enhancements
-   -------------------------- */
-@media (max-width: 600px) {
-  .container {
-    margin: 12px auto;
-    padding: 0 10px;
-  }
-
-  h1 {
-    font-size: 22px;
-    line-height: 1.3;
-  }
-
-  h2 {
-    font-size: 18px;
-  }
-
-  /* Navigation: stack links */
-  header .row > div:last-child {
-    flex-direction: column;
-    gap: 12px;
-    width: 100%;
-  }
-  .nav-card {
-    flex: 1 1 100%;
-    padding: 14px;
-    font-size: 14px;
-    text-align: center;
-  }
-
-  /* Forms: stack fields */
-  .row {
-    flex-direction: column;
-    gap: 10px;
-  }
-  .field {
-    flex: 1 1 100%;
-  }
-  input,
-  select,
-  button {
-    width: 100%;
-    font-size: 15px;
-  }
-
-  /* Grid: collapse into 1 column */
-  .grid-2 {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  /* Totals: stack vertically */
-  .totals-grid {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  /* Tables: make scrollable */
   .card-body table {
     font-size: 13px;
-    min-width: 600px; /* prevent columns from squishing */
   }
   .card-body {
     overflow-x: auto;
   }
-
-  /* Credit/Product tables */
   #creditTable,
   #productTable,
   #shiftLogTable {
     font-size: 13px;
-    min-width: 700px;
   }
 
-  /* Modals: adapt height & width */
+  /* Credit Table */
+  #creditTable,
+  #creditTable thead,
+  #creditTable tbody,
+  #creditTable th,
+  #creditTable td,
+  #creditTable tr {
+    display: block;
+  }
+  #creditTable thead {
+    display: none;
+  }
+  #creditTable tr {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    padding: 10px;
+    box-shadow: var(--shadow);
+  }
+  #creditTable td {
+    display: flex;
+    flex-direction: column;
+    padding: 6px 4px;
+    font-size: 14px;
+  }
+  #creditTable td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--muted);
+    margin-right: 10px;
+    text-align: left;
+  }
+
+  /* Product Table */
+  #productTable,
+  #productTable thead,
+  #productTable tbody,
+  #productTable th,
+  #productTable td,
+  #productTable tr {
+    display: block;
+  }
+  #productTable thead {
+    display: none;
+  }
+  #productTable tr {
+    background: var(--card);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    margin-bottom: 12px;
+    padding: 10px;
+    box-shadow: var(--shadow);
+  }
+  #productTable td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 4px;
+    font-size: 14px;
+  }
+  #productTable td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--muted);
+    margin-right: 10px;
+    text-align: left;
+  }
+  #productTable td input,
+  #productTable td select,
+  #productTable td button {
+    width: 60%;
+    font-size: 14px;
+  }
+
+  /* Modals */
+  .modal {
+    padding: 10px;
+  }
   .modal-content {
     width: 95%;
     margin: 15% auto;
-    max-height: 80vh;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 14px;
   }
   .modal-body {
     padding: 10px;
     overflow-y: auto;
   }
-  .pump-card-container {
-    flex-direction: column;
+  .modal-content table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    font-size: 13px;
   }
+  .modal-content th,
+  .modal-content td {
+    padding: 6px;
+  }
+  .modal-header h3 {
+    font-size: 18px;
+  }
+}
+
+/* --------------------------
+   Animations
+   -------------------------- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }

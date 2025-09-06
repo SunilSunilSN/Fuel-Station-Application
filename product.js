@@ -5,10 +5,10 @@ function renderProducts() {
   getProducts().forEach((p, index) => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td><input type="text" class="prodName" value="${p.name}"></td>
-      <td><input type="number" class="prodRate" value="${p.rate}" step="0.01"></td>
-      <td><input type="number" class="prodStock" value="${p.stock}" step="1"></td>
-      <td style="display:flex; gap:20px">
+      <td data-label="Product Name"><input type="text" class="prodName" placeholder="Product Name" value="${p.name}"></td>
+      <td data-label="Product Price"><input type="number" class="prodRate" value="${p.rate}" step="0.01"></td>
+      <td data-label="Product Stock" ><input type="number" class="prodStock" value="${p.stock}" step="1"></td>
+      <td data-label="Action" style="display:flex; gap:20px">
         <button class="btn-accent">💾 Save</button>
         <button class="btn-danger">🗑️ Delete</button>
       </td>
