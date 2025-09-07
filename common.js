@@ -58,6 +58,7 @@ function setConfig(cfg) {
   localStorage.setItem(CONFIG_KEY, JSON.stringify(cfg));
   scheduleCloudSave(collectAllData());
 }
+
 // ===== Collect Everything =====
 function collectAllData() {
   return {
@@ -71,6 +72,12 @@ function collectAllData() {
 
 // ===== Cloud Save =====
 let saveTimer;
+document.addEventListener("DOMContentLoaded", () => {
+  let loginBtn = document.getElementById("login-button");
+  if (loginBtn) {
+    loginBtn.addEventListener("click", signInWithGoogle);
+  }
+});
 
 function scheduleCloudSave(data) {
   clearTimeout(saveTimer);

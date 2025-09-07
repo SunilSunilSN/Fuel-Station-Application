@@ -70,6 +70,7 @@ function renderConfig() {
       const cfg = getConfig();
       cfg.splice(idx, 1);
       setConfig(cfg);
+      renderConfig();
     });
     tdAct.appendChild(delBtn);
 

@@ -47,7 +47,8 @@ function signInWithGoogle() {
 
   if (isMobile) {
     console.log("📱 Mobile detected: Using redirect login");
-    auth.signInWithRedirect(provider).catch(console.error);
+    // auth.signInWithRedirect(provider).catch(console.error);
+    auth.signInWithPopup(provider).catch(console.error);
   } else {
     console.log("💻 Desktop detected: Using popup login");
     auth.signInWithPopup(provider).catch(console.error);
@@ -58,6 +59,16 @@ function signInWithGoogle() {
 function onUserLoggedIn(user) {
   docRef = db.collection("users").doc(user.uid);
   console.log("🔑 Signed in as " + user.email);
+    const userName = user.displayName || "Unknown User";
+  const userEmail = user.email;
+  const userId = user.uid;
+  console.log("User Name:", userName);
+  console.log("User Email:", userEmail);
+  console.log("User UID:", userId);
+    const userLabel = document.getElementById("UserName");
+  if (userLabel) {
+    userLabel.textContent = `Hello, ${userName}`;
+  }
   if (typeof startCloudListener === "function") startCloudListener();
 }
 
