@@ -23,28 +23,42 @@ db.enablePersistence().catch((err) => {
 
 let docRef = null;
 
-// 3. Auth handling with auto sign-in
-auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+// 3. Auth handling with auto sign-in (desktop popup, mobile redirect)
+const provider = new firebase.auth.GoogleAuthProvider();
 
+// Handle redirect result (mobile)
+auth.getRedirectResult()
+  .then((result) => {
+    if (result.user) {
+      docRef = db.collection("users").doc(result.user.uid);
+      log("🔑 Signed in via redirect as " + result.user.email);
+      if (typeof startCloudListener === "function") startCloudListener();
+    }
+  })
+  .catch((err) => {
+    console.error("Redirect sign-in error:", err);
+  });
+
+// Listen for auth changes
 auth.onAuthStateChanged((user) => {
   if (user) {
-    // Logged in
     docRef = db.collection("users").doc(user.uid);
     log("🔑 Signed in as " + user.email);
-
-    if (typeof startCloudListener === "function") {
-      startCloudListener(); // from common.js
-    }
+    if (typeof startCloudListener === "function") startCloudListener();
   } else {
-    // Not logged in → auto sign in with Google
     docRef = null;
-    log("⚠️ No user, signing in with Google...");
+    log("⚠️ No user, auto signing in...");
 
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider).catch((err) => {
-      console.error("Google sign-in failed", err);
-      log("❌ Google sign-in failed: " + err.message);
-    });
+    // Detect mobile browser
+    const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+      auth.signInWithRedirect(provider);
+    } else {
+      auth.signInWithPopup(provider).catch((err) => {
+        console.error("Google sign-in failed", err);
+        log("❌ Google sign-in failed: " + err.message);
+      });
+    }
   }
 });
 
