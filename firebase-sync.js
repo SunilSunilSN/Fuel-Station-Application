@@ -22,27 +22,27 @@ let redirectAttempted = false; // Prevent multiple redirects
 // 3. Set persistence
 auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(console.error);
 
-// 4. Listen for auth state changes
-auth.onAuthStateChanged((user) => {
-  if (user) {
-    onUserLoggedIn(user);
-  } else {
-    // Only try auto-signin once per page load
-    if (!redirectAttempted) {
-      redirectAttempted = true;
-      autoSignIn();
-    }
-  }
-});
-
-// 5. Handle redirect result (after redirect)
+// 4. Handle redirect result (after redirect) FIRST
 auth.getRedirectResult()
   .then((result) => {
     if (result.user) {
       onUserLoggedIn(result.user);
+    } else {
+      // Only try auto-signin once per page load
+      if (!redirectAttempted) {
+        redirectAttempted = true;
+        autoSignIn();
+      }
     }
   })
   .catch(console.error);
+
+// 5. Listen for auth state changes
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    onUserLoggedIn(user);
+  }
+});
 
 // 6. Helper function: Auto sign-in
 function autoSignIn() {
