@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Credit Customers</title>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script src="firebase-sync.js"></script>
+    <script src="common.js"></script>
+    <script src="customer.js"></script>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -21,24 +27,16 @@
         </div>
         <div class="nav-main">
           <div>
-            <a class="nav-card" href="index.html" >
-              📈 Dashboard
-            </a>
+            <a class="nav-card" href="index.html"> 📈 Dashboard </a>
           </div>
           <div>
-            <a class="nav-card" href="config.html" >
-              ⚙️ Pump Config
-            </a>
+            <a class="nav-card" href="config.html"> ⚙️ Pump Config </a>
           </div>
           <div>
-            <a class="nav-card" href="product.html" >
-              📦 Products Config
-            </a>
+            <a class="nav-card" href="product.html"> 📦 Products Config </a>
           </div>
           <div>
-            <a class="nav-card" href="shift.html" >
-              📔 Shift Settlement
-            </a>
+            <a class="nav-card" href="shift.html"> 📔 Shift Settlement </a>
           </div>
         </div>
       </header>
@@ -106,8 +104,5 @@
         </div>
       </div>
     </div>
-
-    <script src="common.js"></script>
-    <script src="customer.js"></script>
   </body>
 </html>

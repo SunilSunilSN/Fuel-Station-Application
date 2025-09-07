@@ -25,8 +25,11 @@
       >
         <div>
           <h1>⛽ Devaramani Petrol Station Dashboard</h1>
-          <button onclick="testAddShift()">Add Dummy Shift</button>
-          <button onclick="uploadLocalToCloud()">Force Upload</button>
+<button id="login-button">Sign in with Google</button>
+
+<script>
+  document.getElementById("login-button").addEventListener("click", signInWithGoogle);
+</script>
           <div class="muted">Daily meter readings & monthly summary</div>
         </div>
         <div class="nav-main">

@@ -1,5 +1,3 @@
-// firebase-sync.js
-
 // 1. Firebase config (replace with your Firebase Console values)
 const firebaseConfig = {
   apiKey: "AIzaSyDdcHJMlRaRxmdm6Lax6aPpdbGcG1oRVek",
@@ -17,36 +15,33 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 
 let docRef = null;
-let redirectAttempted = false; // Prevent multiple redirects
 
-// 3. Set persistence
-auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(console.error);
+// 3. Set persistence once
+auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+  .catch(console.error);
 
-// 4. Handle redirect result (after redirect) FIRST
+// 4. Handle redirect result on page load
+// This is called AFTER the redirect returns.
 auth.getRedirectResult()
   .then((result) => {
     if (result.user) {
       onUserLoggedIn(result.user);
-    } else {
-      // Only try auto-signin once per page load
-      if (!redirectAttempted) {
-        redirectAttempted = true;
-        autoSignIn();
-      }
     }
   })
   .catch(console.error);
 
-// 5. Listen for auth state changes
+// 5. Listen for auth state changes for ongoing session management
 auth.onAuthStateChanged((user) => {
   if (user) {
     onUserLoggedIn(user);
+  } else {
+    onUserSignedOut(); // Add a function to handle signed-out state
   }
 });
 
-// 6. Helper function: Auto sign-in
-function autoSignIn() {
-  if (auth.currentUser) return; // already signed in
+// 6. User-initiated sign-in function
+// This function should be called from a button click or other user action.
+function signInWithGoogle() {
   const provider = new firebase.auth.GoogleAuthProvider();
   const isMobile = /Mobi|Android/i.test(navigator.userAgent);
 
@@ -66,12 +61,19 @@ function onUserLoggedIn(user) {
   if (typeof startCloudListener === "function") startCloudListener();
 }
 
-// 8. Optional: Sign out
+// 8. User signed out
+function onUserSignedOut() {
+  docRef = null;
+  console.log("🚶 User signed out.");
+  // Add logic to show login button and hide user content
+}
+
+// 9. Optional: Sign out function
 function signOutUser() {
   return auth.signOut();
 }
 
-// 9. Getter for current user's document reference
+// 10. Getter for current user's document reference
 function getDocRef() {
   return docRef;
 }
