@@ -1,7 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Firebase compat SDKs (use these instead of v10 modular) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script src="firebase-sync.js"></script>
+    <script src="common.js"></script>
+    <script src="script.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Petrol Pump Dashboard</title>
     <link rel="stylesheet" href="style.css" />
   </head>
@@ -17,31 +24,23 @@
         "
       >
         <div>
-          <h1>
-            ⛽ Devaramani Petrol Station Dashboard
-          </h1>
+          <h1>⛽ Devaramani Petrol Station Dashboard</h1>
+          <button onclick="testAddShift()">Add Dummy Shift</button>
+          <button onclick="uploadLocalToCloud()">Force Upload</button>
           <div class="muted">Daily meter readings & monthly summary</div>
         </div>
         <div class="nav-main">
           <div>
-            <a class="nav-card" href="config.html" >
-              ⚙️ Pump Config
-            </a>
+            <a class="nav-card" href="config.html"> ⚙️ Pump Config </a>
           </div>
           <div>
-            <a class="nav-card " href="shift.html" >
-              📔 Shift Settlement
-            </a>
+            <a class="nav-card" href="shift.html"> 📔 Shift Settlement </a>
           </div>
           <div>
-            <a class="nav-card" href="product.html">
-              📦 Products Config
-            </a>
+            <a class="nav-card" href="product.html"> 📦 Products Config </a>
           </div>
           <div>
-            <a class="nav-card" href="customer.html">
-              👨🏻‍💼 Customer Config
-            </a>
+            <a class="nav-card" href="customer.html"> 👨🏻‍💼 Customer Config </a>
           </div>
         </div>
         <!-- <a href="config.html" class="pill">⚙️ Pump Config</a>
@@ -80,39 +79,39 @@
       </section>
 
       <!-- Daily Log Two-->
-<section class="card" style="margin-top: 16px">
-  <div class="card-head">
-    <h2>Daily Summary</h2>
-    <span class="tag" id="dayTitle">—</span>
-  </div>
-  <div class="card-body">
-    <div class="row" style="gap: 12px; align-items: flex-end">
-      <div class="field" style="max-width: 220px">
-        <label for="dayPicker">Pick Date</label>
-        <input type="date" id="dayPicker" />
-      </div>
-    </div>
-    <div style="overflow: auto; margin-top: 12px">
-      <table id="dailyTable">
-        <thead>
-          <tr>
-            <th>Fuel</th>
-            <th class="right">Liters</th>
-            <th class="right">Amount (₹)</th>
-          </tr>
-        </thead>
-        <tbody id="DailyBody"></tbody>
-        <tfoot>
-          <tr>
-            <td>Total</td>
-            <td class="right" id="dTL">0.00</td>
-            <td class="right" id="dTA">0.00</td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
-  </div>
-</section>
+      <section class="card" style="margin-top: 16px">
+        <div class="card-head">
+          <h2>Daily Summary</h2>
+          <span class="tag" id="dayTitle">—</span>
+        </div>
+        <div class="card-body">
+          <div class="row" style="gap: 12px; align-items: flex-end">
+            <div class="field" style="max-width: 220px">
+              <label for="dayPicker">Pick Date</label>
+              <input type="date" id="dayPicker" />
+            </div>
+          </div>
+          <div style="overflow: auto; margin-top: 12px">
+            <table id="dailyTable">
+              <thead>
+                <tr>
+                  <th>Fuel</th>
+                  <th class="right">Liters</th>
+                  <th class="right">Amount (₹)</th>
+                </tr>
+              </thead>
+              <tbody id="DailyBody"></tbody>
+              <tfoot>
+                <tr>
+                  <td>Total</td>
+                  <td class="right" id="dTL">0.00</td>
+                  <td class="right" id="dTA">0.00</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </section>
       <!-- Monthly Summary Card -->
       <section class="card" style="margin-top: 16px">
         <div class="card-head">
@@ -148,7 +147,5 @@
         </div>
       </section>
     </div>
-    <script src="common.js"></script>
-    <script src="script.js"></script>
   </body>
 </html>

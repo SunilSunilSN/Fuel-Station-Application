@@ -1,26 +1,26 @@
-const CONFIG_KEY = "pumpConfigV1";
+// const CONFIG_KEY = "pumpConfigV1";
 
-const FUEL_RATES = {
-  Petrol: 104.09,
-  Diesel: 92.23,
-  XP95: 111.41,
-  "Extra Green": 95.91
-};
+// const FUEL_RATES = {
+//   Petrol: 104.09,
+//   Diesel: 92.23,
+//   XP95: 111.41,
+//   "Extra Green": 95.91
+// };
 
-function getConfig() {
-  return (
-    JSON.parse(localStorage.getItem(CONFIG_KEY)) || [
-      { id: "p1", name: "PUMP-1", fuel: "Petrol", rate: FUEL_RATES.Petrol },
-      { id: "p2", name: "PUMP-2", fuel: "Diesel", rate: FUEL_RATES.Diesel },
-      { id: "p3", name: "PUMP-3", fuel: "XP95", rate: FUEL_RATES.XP95 }
-    ]
-  );
-}
+// function getConfig() {
+//   return (
+//     JSON.parse(localStorage.getItem(CONFIG_KEY)) || [
+//       { id: "p1", name: "PUMP-1", fuel: "Petrol", rate: FUEL_RATES.Petrol },
+//       { id: "p2", name: "PUMP-2", fuel: "Diesel", rate: FUEL_RATES.Diesel },
+//       { id: "p3", name: "PUMP-3", fuel: "XP95", rate: FUEL_RATES.XP95 }
+//     ]
+//   );
+// }
 
-function setConfig(cfg) {
-  localStorage.setItem(CONFIG_KEY, JSON.stringify(cfg));
-  renderConfig();
-}
+// function setConfig(cfg) {
+//   localStorage.setItem(CONFIG_KEY, JSON.stringify(cfg));
+//   renderConfig();
+// }
 
 function renderConfig() {
   const body = document.getElementById("pumpConfigBody");
@@ -37,6 +37,7 @@ function renderConfig() {
       const cfg = getConfig();
       cfg[idx].name = inpName.value;
       setConfig(cfg);
+      renderConfig();
     });
     tdName.appendChild(inpName);
 
@@ -90,6 +91,7 @@ function addPump() {
     rate: FUEL_RATES.Petrol
   });
   setConfig(cfg);
+  renderConfig();
 }
 
 document.addEventListener("DOMContentLoaded", () => {

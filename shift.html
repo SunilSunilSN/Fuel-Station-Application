@@ -1,8 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shift Settlement</title>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+    <script src="firebase-sync.js"></script>
+    <script src="common.js"></script>
+    <script src="shift.js"></script>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -21,24 +27,16 @@
         </div>
         <div class="nav-main">
           <div>
-            <a class="nav-card" href="index.html" >
-              📈 Dashboard
-            </a>
+            <a class="nav-card" href="index.html"> 📈 Dashboard </a>
           </div>
           <div>
-            <a class="nav-card" href="config.html" >
-              ⚙️ Pump Config
-            </a>
+            <a class="nav-card" href="config.html"> ⚙️ Pump Config </a>
           </div>
           <div>
-            <a class="nav-card" href="product.html" >
-              📦 Products Config
-            </a>
+            <a class="nav-card" href="product.html"> 📦 Products Config </a>
           </div>
-            <div>
-            <a class="nav-card" href="customer.html" >
-              👨🏻‍💼 Customer Config
-            </a>
+          <div>
+            <a class="nav-card" href="customer.html"> 👨🏻‍💼 Customer Config </a>
           </div>
         </div>
       </header>
@@ -59,13 +57,12 @@
               placeholder="e.g. Morning / John"
             />
           </div>
-<div id="pumpContainer">
-  <div class="field">
-    <label>Select Pumps:</label>
-    <div id="pumpsCheckboxes" class="pump-card-container"></div>
-  </div>
-</div>
-
+          <div id="pumpContainer">
+            <div class="field">
+              <label>Select Pumps:</label>
+              <div id="pumpsCheckboxes" class="pump-card-container"></div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -234,7 +231,5 @@
         </div>
       </div>
     </div>
-    <script src="common.js"></script>
-    <script src="shift.js"></script>
   </body>
 </html>

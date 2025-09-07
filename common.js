@@ -1,45 +1,50 @@
+// ===== LocalStorage Keys =====
 const SHIFT_KEY = "shiftData";
 const LOG_KEY = "pumpReadingsV2";
 const CONFIG_KEY = "pumpConfigV1";
+const PRODUCTS_KEY = "productsData";
+const CUSTOMERS_KEY = "customers";
+
 const FUEL_RATES = {
   Petrol: 104.09,
   Diesel: 92.23,
   XP95: 111.41,
   "Extra Green": 95.91,
 };
-const PRODUCTS_KEY = "productsData"; // new key for products inventory
 
-// Get products from localStorage
-function getProducts() {
-  // Returns array of products with {name, rate, stock}
-  return JSON.parse(localStorage.getItem(PRODUCTS_KEY)) || [];
-}
-// Save products to localStorage
-function setProducts(data) {
-  localStorage.setItem(PRODUCTS_KEY, JSON.stringify(data));
-}
-
+// ===== Local Helpers =====
 function getShifts() {
   return JSON.parse(localStorage.getItem(SHIFT_KEY)) || [];
 }
 function setShifts(data) {
   localStorage.setItem(SHIFT_KEY, JSON.stringify(data));
+  scheduleCloudSave(collectAllData());
 }
+
 function getDailyLog() {
   return JSON.parse(localStorage.getItem(LOG_KEY)) || [];
 }
 function setDailyLog(d) {
   localStorage.setItem(LOG_KEY, JSON.stringify(d));
-  refreshLog();
-  updateMonth();
+  scheduleCloudSave(collectAllData());
 }
+
 function getCustomers() {
-  return JSON.parse(localStorage.getItem("customers") || "[]");
+  return JSON.parse(localStorage.getItem(CUSTOMERS_KEY) || "[]");
 }
 function setCustomers(list) {
-  localStorage.setItem("customers", JSON.stringify(list));
+  localStorage.setItem(CUSTOMERS_KEY, JSON.stringify(list));
+  scheduleCloudSave(collectAllData());
 }
-// ===== Config Helpers =====
+
+function getProducts() {
+  return JSON.parse(localStorage.getItem(PRODUCTS_KEY)) || [];
+}
+function setProducts(data) {
+  localStorage.setItem(PRODUCTS_KEY, JSON.stringify(data));
+  scheduleCloudSave(collectAllData());
+}
+
 function getConfig() {
   return (
     JSON.parse(localStorage.getItem(CONFIG_KEY)) || [
@@ -49,4 +54,94 @@ function getConfig() {
     ]
   );
 }
+function setConfig(cfg) {
+  localStorage.setItem(CONFIG_KEY, JSON.stringify(cfg));
+  scheduleCloudSave(collectAllData());
+}
+// ===== Collect Everything =====
+function collectAllData() {
+  return {
+    shifts: getShifts(),
+    dailyLog: getDailyLog(),
+    config: getConfig(),
+    customers: getCustomers(),
+    products: getProducts(),
+  };
+}
 
+// ===== Cloud Save =====
+let saveTimer;
+
+function scheduleCloudSave(data) {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    saveAllToCloud(data);
+  }, 1000);
+}
+
+async function saveAllToCloud(data) {
+  const docRef = getDocRef();
+  if (!docRef) return; // not logged in yet
+  try {
+    await docRef.set({ ...data, updatedAt: Date.now() }, { merge: true });
+    log("✅ Synced to cloud");
+  } catch (err) {
+    console.error("Cloud save failed", err);
+    log("❌ Cloud save failed: " + err.message);
+  }
+}
+
+// ===== Cloud Listener =====
+function startCloudListener() {
+  const docRef = getDocRef();
+  if (!docRef) return;
+  docRef.onSnapshot((doc) => {
+    if (doc.exists) {
+      const remote = doc.data();
+      log("📥 Cloud update received");
+
+      if (remote.shifts)
+        localStorage.setItem(SHIFT_KEY, JSON.stringify(remote.shifts));
+      if (remote.dailyLog)
+        localStorage.setItem(LOG_KEY, JSON.stringify(remote.dailyLog));
+      if (remote.config)
+        localStorage.setItem(CONFIG_KEY, JSON.stringify(remote.config));
+      if (remote.customers)
+        localStorage.setItem(CUSTOMERS_KEY, JSON.stringify(remote.customers));
+      if (remote.products)
+        localStorage.setItem(PRODUCTS_KEY, JSON.stringify(remote.products));
+    }
+  });
+}
+
+// ===== Utility UI =====
+function log(msg) {
+  const out = document.getElementById("output");
+  if (out) out.textContent += msg + "\n";
+}
+
+function testAddShift() {
+  const shifts = getShifts();
+  shifts.push({
+    date: new Date().toISOString(),
+    person: "Tester",
+    pumps: ["PUMP-1"],
+    credits: [],
+    products: [],
+    expected: 1000,
+    upi: 500,
+    cash: 500,
+  });
+  setShifts(shifts);
+  log("➕ Added dummy shift");
+}
+
+async function uploadLocalToCloud() {
+  const docRef = getDocRef();
+  if (!docRef) {
+    log("⚠️ Not signed in");
+    return;
+  }
+  await saveAllToCloud(collectAllData());
+  log("⬆️ Forced upload of local data");
+}
