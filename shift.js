@@ -246,7 +246,7 @@ function calcTotals() {
       if (dayEntry[pid]) expected += dayEntry[pid].amount;
     });
   }
-
+  
   document.getElementById("expectedAmt").textContent =
     "₹" + expected.toLocaleString("en-IN");
   document.getElementById("reportedAmt").textContent =

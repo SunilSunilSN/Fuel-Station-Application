@@ -13,7 +13,31 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="container">
+    <div
+      id="loginContainer"
+      style="
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        min-height: 100vh;
+      "
+    >
+      <div>
+        <h1>⛽ Devaramani Petrol Station Dashboard</h1>
+        <h1 class="muted">Welcome, Please Proceed to login</h1>
+        <div style="display: flex; gap: 5%">
+          <button
+            class="btn-accent"
+            id="login-button"
+            style="margin-top: 20px; height: 60px"
+          >
+            Sign in with Google
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="MainContainer" class="container" style="display: none">
       <header
         class="row"
         style="
@@ -26,7 +50,12 @@
         <div>
           <h1>⛽ Devaramani Petrol Station Dashboard</h1>
           <h1 id="UserName" class="muted">Welcome User!</h1>
-          <button id="login-button">Sign in with Google</button>
+          <div style="display: flex; gap: 5%">
+            <button class="btn-accent" id="login-button">
+              Sign in with Google
+            </button>
+            <button class="btn-danger" id="logout-button">Sign Out!</button>
+          </div>
           <div class="muted">Daily meter readings & monthly summary</div>
         </div>
         <div class="nav-main">

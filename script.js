@@ -145,6 +145,7 @@ function saveDay() {
   else d.push(entry);
   setDailyLog(d);
   alert("Saved");
+  refreshLog();
 }
 
 // ===== Log =====

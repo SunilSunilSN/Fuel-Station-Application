@@ -17,12 +17,12 @@ const db = firebase.firestore();
 let docRef = null;
 
 // 3. Set persistence once
-auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-  .catch(console.error);
+auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL).catch(console.error);
 
 // 4. Handle redirect result on page load
 // This is called AFTER the redirect returns.
-auth.getRedirectResult()
+auth
+  .getRedirectResult()
   .then((result) => {
     if (result.user) {
       onUserLoggedIn(result.user);
@@ -59,22 +59,39 @@ function signInWithGoogle() {
 function onUserLoggedIn(user) {
   docRef = db.collection("users").doc(user.uid);
   console.log("🔑 Signed in as " + user.email);
-    const userName = user.displayName || "Unknown User";
+  const userName = user.displayName || "Unknown User";
   const userEmail = user.email;
   const userId = user.uid;
   console.log("User Name:", userName);
   console.log("User Email:", userEmail);
   console.log("User UID:", userId);
-    const userLabel = document.getElementById("UserName");
+  const userLabel = document.getElementById("UserName");
+  const MainCont = document.getElementById("MainContainer");
+  const LoginCont = document.getElementById("loginContainer");
   if (userLabel) {
     userLabel.textContent = `Hello, ${userName}`;
   }
   if (typeof startCloudListener === "function") startCloudListener();
+  if (MainCont) {
+    MainCont.style.display = "blocK";
+  }
+  if (LoginCont) {
+    LoginCont.style.display = "none";
+  }
 }
 
 // 8. User signed out
 function onUserSignedOut() {
   docRef = null;
+  const MainCont = document.getElementById("MainContainer");
+  const LoginCont = document.getElementById("loginContainer");
+  if (MainCont) {
+    MainCont.style.display = "none";
+  }
+  if (LoginCont) {
+    LoginCont.style.display = "flex";
+  }
+
   console.log("🚶 User signed out.");
   // Add logic to show login button and hide user content
 }

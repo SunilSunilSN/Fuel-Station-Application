@@ -77,6 +77,10 @@ document.addEventListener("DOMContentLoaded", () => {
   if (loginBtn) {
     loginBtn.addEventListener("click", signInWithGoogle);
   }
+    let logOutBtn = document.getElementById("logout-button");
+  if (logOutBtn) {
+    logOutBtn.addEventListener("click", signOutUser);
+  }
 });
 
 function scheduleCloudSave(data) {

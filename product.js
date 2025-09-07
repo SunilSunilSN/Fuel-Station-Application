@@ -21,7 +21,7 @@ function renderProducts() {
       products[index] = {
         name: tr.querySelector(".prodName").value,
         rate: parseFloat(tr.querySelector(".prodRate").value) || 0,
-        stock: parseFloat(tr.querySelector(".prodStock").value) || 0
+        stock: parseFloat(tr.querySelector(".prodStock").value) || 0,
       };
       setProducts(products);
       renderProducts();
@@ -38,12 +38,14 @@ function renderProducts() {
 }
 
 // Add new product row at the end
-document.getElementById("addProductBtn").addEventListener("click", () => {
-  const products = getProducts();
-  products.push({ name: "", rate: 0, stock: 0 });
-  setProducts(products);
-  renderProducts();
-});
 
 // Initial render
-document.addEventListener("DOMContentLoaded", renderProducts);
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("addProductBtn").addEventListener("click", () => {
+    const products = getProducts();
+    products.push({ name: "", rate: 0, stock: 0 });
+    setProducts(products);
+    
+  });
+  renderProducts();
+});
