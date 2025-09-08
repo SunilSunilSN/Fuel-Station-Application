@@ -424,13 +424,16 @@ tfoot td {
 .pump-card-selection input {
   display: none;
 }
-.pump-card-selection:hover {
-  border-color: #05f511;
-  background: rgb(116, 116, 116);
-}
+
 .pump-card-selection.active {
   background: #2f922f;
   border-color: green;
+  color: green;
+  font-weight: bold;
+}
+.pump-card-selection.grey {
+  background: #2f922f;
+  background: rgb(116, 116, 116);
   color: green;
   font-weight: bold;
 }
@@ -502,7 +505,6 @@ tfoot td {
   .pump-card-container {
     flex-direction: column;
   }
-
   /* Forms */
   .row {
     flex-direction: column;

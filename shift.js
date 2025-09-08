@@ -1,9 +1,17 @@
+var AllDailyLog = [];
 document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("pumpsCheckboxes");
+  AllDailyLog = mergeDailyLogs(
+    getDailyLog(),
+    getShifts(),
+    getConfig(),
+    getProducts()
+  ).filter((el) =>
+    el.date.startsWith(document.getElementById("shiftDate").value)
+  )[0];
   getConfig().forEach((pump) => {
     const div = document.createElement("label");
     div.className = "pump-card-selection";
-
     const input = document.createElement("input");
     input.type = "checkbox";
     input.className = "pumpCheckbox";
@@ -12,23 +20,59 @@ document.addEventListener("DOMContentLoaded", () => {
     const pumpName = document.createElement("h2");
     pumpName.style = "color: white";
     pumpName.value = ` ${pump.name} • ${pump.fuel} @ ₹${pump.rate}`;
-
     div.appendChild(input);
-
     div.appendChild(pumpName);
     pumpName.append(` ${pump.name} • ${pump.fuel} @ ₹${pump.rate}`);
     // div.append(` ${pump.name} • ${pump.fuel} @ ₹${pump.rate}`);
     container.appendChild(div);
-
     // toggle active class on change
     input.addEventListener("change", () => {
-      div.classList.toggle("active", input.checked);
+      if (document.getElementById("shiftDate").value == "") {
+        alert("please Select Date Before ");
+        div.classList.remove("active");
+        input.checked = false;
+        return;
+      } else {
+        div.classList.toggle("active", input.checked);
+      }
     });
   });
-  container.addEventListener("change", calcTotals);
-  ["shiftDate", "pumpsCheckboxes"].forEach((id) => {
+  container.addEventListener("change", () => {
+    calcTotals;
+  });
+  ["shiftDate"].forEach((id) => {
     const el = document.getElementById(id);
-    if (el) el.addEventListener("input", () => clearShiftEntriesAndTotals());
+    if (el)
+      el.addEventListener("input", () => {
+        document.querySelectorAll(".pumpCheckbox").forEach((el) => {
+          AllDailyLog = mergeDailyLogs(
+            getDailyLog(),
+            getShifts(),
+            getConfig(),
+            getProducts()
+          ).filter((el) =>
+            el.date.startsWith(document.getElementById("shiftDate").value)
+          )[0];
+          el.checked = false;
+          const label = el.closest("label"); // get the wrapping label
+          if (AllDailyLog) {
+            if (AllDailyLog.shiftPumps.includes(el.value)) {
+              el.disabled = true;
+              el.checked = false;
+              if (label) label.classList.add("grey");  label.classList.remove("active");
+            } else {
+              el.disabled = false;
+              el.checked = false;
+              if (label) label.classList.remove("grey"); label.classList.remove("active");
+            }
+          } else {
+            el.disabled = false;
+            el.checked = false;
+            if (label) label.classList.remove("grey");  label.classList.remove("active");
+          }
+        });
+        clearShiftEntriesAndTotals();
+      });
   });
   [
     "upi",
@@ -246,17 +290,23 @@ function calcTotals() {
       if (dayEntry[pid]) expected += dayEntry[pid].amount;
     });
   }
-  
+  const totalAmount = expected + productTotal - Miscamt;
   document.getElementById("expectedAmt").textContent =
     "₹" + expected.toLocaleString("en-IN");
   document.getElementById("reportedAmt").textContent =
     "₹" + reported.toLocaleString("en-IN");
+  document.getElementById("expectedProductAmt").textContent =
+    "₹" + productTotal.toLocaleString("en-IN");
+  document.getElementById("expensesAmt").textContent =
+    "₹" + Miscamt.toLocaleString("en-IN");
+  document.getElementById("totalAmt").textContent =
+    "₹" + totalAmount.toLocaleString("en-IN");
   document.getElementById("diffAmt").textContent =
-    "₹" + (reported - expected).toLocaleString("en-IN");
-  if(reported - expected < 0) {
-    document.getElementById("diffAmt").style.color = "red"
+    "₹" + (reported - (expected + productTotal)).toLocaleString("en-IN");
+  if (reported - (expected + productTotal) < 0) {
+    document.getElementById("diffAmt").style.color = "red";
   } else {
-    document.getElementById("diffAmt").style.color = "green"
+    document.getElementById("diffAmt").style.color = "green";
   }
 }
 
@@ -267,7 +317,10 @@ function saveShift() {
   const selectedPumps = Array.from(
     document.querySelectorAll(".pumpCheckbox:checked")
   ).map((cb) => cb.value);
-
+  if(selectedPumps.length == 0) {
+    alert("No Pumps Selected to Save!");
+    return;
+  } 
   // Calculate total expected across selected pumps
   const logs = getDailyLog();
   const dayEntry = logs.find((l) => l.date === date);
@@ -319,8 +372,9 @@ function saveShift() {
   document.querySelectorAll("#creditTable tbody tr").forEach((tr) => {
     shift.credits.push({
       customerId: parseInt(tr.querySelector(".creditCustomer").value) || null,
-      customerName: tr.querySelector(".creditCustomer").selectedOptions[0]?.text || "",
-      veh: tr.querySelector(".creditVehicle").selectedOptions[0]?.text || "", 
+      customerName:
+        tr.querySelector(".creditCustomer").selectedOptions[0]?.text || "",
+      veh: tr.querySelector(".creditVehicle").selectedOptions[0]?.text || "",
       bill: tr.querySelector(".billNo").value,
       indent: tr.querySelector(".indentNo").value,
       liters: parseFloat(tr.querySelector(".liters").value) || 0,

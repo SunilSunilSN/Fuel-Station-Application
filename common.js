@@ -130,21 +130,135 @@ function log(msg) {
   const out = document.getElementById("output");
   if (out) out.textContent += msg + "\n";
 }
+function mergeDailyLogs(getDailyLog, getShifts, getConfig, getProducts) {
+  var configMap = {};
+  for (var i = 0; i < getConfig.length; i++) {
+    var cfg = getConfig[i];
+    configMap[cfg.id] = cfg;
+  }
 
-function testAddShift() {
-  const shifts = getShifts();
-  shifts.push({
-    date: new Date().toISOString(),
-    person: "Tester",
-    pumps: ["PUMP-1"],
-    credits: [],
-    products: [],
-    expected: 1000,
-    upi: 500,
-    cash: 500,
-  });
-  setShifts(shifts);
-  log("➕ Added dummy shift");
+  var productMap = {};
+  for (var j = 0; j < getProducts.length; j++) {
+    var prod = getProducts[j];
+    productMap[prod.name] = { stock: prod.stock, rate: prod.rate };
+  }
+
+  var result = [];
+
+  for (var d = 0; d < getDailyLog.length; d++) {
+    var log = getDailyLog[d];
+    var day = log.date;
+
+    // find all shifts for this day
+    var shifts = getShifts.filter(function (s) { return s.date === day; });
+
+    var pumpsArr = [];
+    var shiftPumps = [];
+    var allProductsSold = [];
+    var credits = [];
+    var payments = { cash: 0, card: 0, upi: 0, fleet: 0 };
+    var miscAmt = 0;
+    var miscRems = [];
+    var expected = 0;
+    var persons = [];
+    var personSummary = {};
+
+    // attach pumps with config
+    for (var key in log) {
+      if (key.startsWith("p")) {
+        var pumpObj = log[key];
+        var cfg = configMap[key] || {};
+        pumpsArr.push(Object.assign({ pumpId: key }, pumpObj, cfg));
+      }
+    }
+
+    // merge shift data
+    for (var s = 0; s < shifts.length; s++) {
+      var shift = shifts[s];
+      persons.push(shift.person);
+      shiftPumps = shiftPumps.concat(shift.pumps || []);
+      allProductsSold = allProductsSold.concat(shift.products || []);
+      credits = credits.concat(shift.credits || []);
+
+      payments.cash += shift.cash || 0;
+      payments.card += shift.card || 0;
+      payments.upi += shift.upi || 0;
+      payments.fleet += shift.fleet || 0;
+
+      miscAmt += shift.Miscamt || 0;
+      if (shift.MiscRem) miscRems.push(shift.MiscRem);
+
+      expected += shift.expected || 0;
+
+      // person-wise init
+      if (!personSummary[shift.person]) {
+        personSummary[shift.person] = { pumpSales: {}, creditSales: [], products: [] };
+      }
+
+      // Pump sales assigned based on pumps in that shift
+      for (var p = 0; p < (shift.pumps || []).length; p++) {
+        var pid = shift.pumps[p];
+        var pumpLog = log[pid];
+        var cfg2 = configMap[pid];
+        if (pumpLog && cfg2) {
+          if (!personSummary[shift.person].pumpSales[cfg2.fuel]) {
+            personSummary[shift.person].pumpSales[cfg2.fuel] = { liters: 0, amount: 0 };
+          }
+          personSummary[shift.person].pumpSales[cfg2.fuel].liters += pumpLog.sold || 0;
+          personSummary[shift.person].pumpSales[cfg2.fuel].amount += pumpLog.amount || 0;
+        }
+      }
+
+      // Credit sales
+      personSummary[shift.person].creditSales =
+        personSummary[shift.person].creditSales.concat(shift.credits || []);
+
+      // Products per person
+      personSummary[shift.person].products =
+        personSummary[shift.person].products.concat(shift.products || []);
+    }
+
+    // Day-wise product summary (with product name as key)
+    var productSummary = {};
+    for (var pr = 0; pr < allProductsSold.length; pr++) {
+      var sp = allProductsSold[pr];
+      var base = productMap[sp.product] || { stock: 0, rate: sp.rate };
+
+      if (!productSummary[sp.product]) {
+        productSummary[sp.product] = {
+          product: sp.product,
+          rate: base.rate,
+          soldQty: 0,
+          soldAmount: 0,
+          stockStart: base.stock,
+          stockLeft: base.stock
+        };
+      }
+
+      productSummary[sp.product].soldQty += sp.qty || 0;
+      productSummary[sp.product].soldAmount += sp.amount || 0;
+      productSummary[sp.product].stockLeft -= sp.qty || 0;
+    }
+
+    result.push({
+      date: day,
+      totalLiters: log.totalLiters,
+      totalAmount: log.totalAmount,
+      pumps: pumpsArr,
+      products: Object.values(productSummary),
+      credits: credits,
+      payments: payments,
+      Miscamt: miscAmt,
+      MiscRem: miscRems.join("; "),
+      expected: expected,
+      person: persons.join(", "),
+      shiftAdded: shifts.length > 0,
+      shiftPumps: shiftPumps,
+      personSummary: personSummary
+    });
+  }
+
+  return result;
 }
 
 async function uploadLocalToCloud() {
