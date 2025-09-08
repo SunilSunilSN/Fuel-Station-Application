@@ -91,7 +91,7 @@ function onUserSignedOut() {
   if (LoginCont) {
     LoginCont.style.display = "flex";
   }
-
+    localStorage.clear();
   console.log("🚶 User signed out.");
   // Add logic to show login button and hide user content
 }
